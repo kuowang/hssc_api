@@ -23,9 +23,9 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-// $app->withFacades();
+ $app->withFacades();
 
-// $app->withEloquent();
+ $app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -103,6 +103,10 @@ $app->register(App\Providers\AuthServiceProvider::class);
 
 // Add this line
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+
+$app->register(Illuminate\Redis\RedisServiceProvider::class);
+
+
 
 /*
 |--------------------------------------------------------------------------

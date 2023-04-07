@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
+
 class TestController extends Controller
 {
     /**
@@ -25,9 +26,10 @@ class TestController extends Controller
      * @param Request $request
      * @return void
      */
-    public function testMysql(Request $request){
+    public function testMysql(Request $request)
+    {
         echo "測試mysql";
-        $data =DB::table('users')->get()->toArray();
+        $data = DB::table('users')->get()->toArray();
         var_dump($data);
     }
 
@@ -36,7 +38,8 @@ class TestController extends Controller
      * @param Request $request
      * @return void
      */
-    public function testRedis(Request $request){
+    public function testRedis(Request $request)
+    {
         echo "測試redis";
         Redis::set('key','val-asdfa');
         $a = Redis::get('key');
@@ -51,30 +54,50 @@ class TestController extends Controller
     public function testJwt(Request $request)
     {
 
-        $user = User::where('id',1)->first();
+        $user = User::where('id', 2)->first();
         //获取token
-        $token =  JWTAuth::fromUser($user);
+        $token = JWTAuth::fromUser($user);
         // JWTFactory::setTTL(80);// 设置TOKEN缓存时间
-        echo  $token;
+        //  echo  $token;
 
         //设置token
         JWTAuth::setToken($token);
         echo "<br>";
 
+        //var_dump(JWTAuth::getToken());
+        //  var_dump(JWTAuth::check());
+        // var_dump(JWTAuth::parseToken());
+        // $a =JWTAuth::getPayload();
+
+        var_dump(JWTAuth::getClaim('sub'));
+
         $userinfo = app('auth')->user();
-        var_dump($userinfo);
+        //var_dump($userinfo);
+        // var_dump(auth()->user());
 
         //刷新token
-        $token1=JWTAuth::refresh();
+        $token1 = JWTAuth::refresh();
         echo "<br>";
-        echo $token1;
+        echo 'Bearer ' . $token1;
         //注销token
-        JWTAuth::invalidate(JWTAuth::getToken()); // 即把当前token加入黑名单
+        //JWTAuth::invalidate(JWTAuth::getToken()); // 即把当前token加入黑名单
 
     }
 
 
+    public function testLogin(){
 
+        $user = User::where('id', 2)->first();
+        //获取token
+        $token = JWTAuth::fromUser($user);
+        // JWTFactory::setTTL(80);// 设置TOKEN缓存时间
+        //  echo  $token;
 
-    //
+        //设置token
+        JWTAuth::setToken($token);
+
+        echo 'Bearer ' . $token;
+
+    }
+
 }

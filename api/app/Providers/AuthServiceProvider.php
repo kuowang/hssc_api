@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -31,8 +32,11 @@ class AuthServiceProvider extends ServiceProvider
         // the User instance via an API token or any other method necessary.
 
         $this->app['auth']->viaRequest('api', function ($request) {
-            if ($request->input('api_token')) {
-                return User::where('api_token', $request->input('api_token'))->first();
+            if ($request->header('Authorization')) {
+                $id = JWTAuth::getClaim('sub');
+                //后期改为先查询redis 并设置过期时间 没有内容的话再去查询数据库
+
+                return User::where('id', $id)->first();
             }
         });
     }

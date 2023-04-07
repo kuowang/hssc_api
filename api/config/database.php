@@ -26,9 +26,9 @@ return [
         ],
         'mongodb' => array(
             'driver'   => env('MONGODB_DRIVER','mongodb'),
-            'host'     => explode(',', env('MONGODB_HOST','123.57.152.143')),
+            'host'     => explode(',', env('MONGODB_HOST','127.0.0.1')),
             'port'     => env('MONGODB_POST','27017'),
-            'database' => env('MONGODB_DATABASE','heishi'),
+            'database' => env('MONGODB_DATABASE','hs'),
             //'options'  => array('replicaSet' => env('MONGODB_OPTIONS_RS'))
         ),
     ],

@@ -17,8 +17,8 @@ $router->get('/index', function () use ($router) {
     return $router->app->version();
 });
 
-// 使用中间件...
-$router->group(['prefix' => 'v1', 'middleware' => [ 'jwtAuth','after']],function ()use($router) {
+// 使用中间件 无权限认证
+$router->group(['prefix' => 'v1', 'middleware' => [ 'after']],function ()use($router) {
 
     $router->get('/user/profile', function () {
 
@@ -26,8 +26,14 @@ $router->group(['prefix' => 'v1', 'middleware' => [ 'jwtAuth','after']],function
 
     $router->get('testmysql',   'TestController@testMysql');
     $router->get('testredis',   'TestController@testRedis');
-    $router->get('testjwt',   'TestController@testjwt');
+    $router->get('testlogin',   'TestController@testLogin');
 
+});
+
+// 使用中间件... 用户登录权限
+$router->group(['prefix' => 'v1', 'middleware' => [ 'jwtAuth','after']],function ()use($router) {
+
+    $router->get('testjwt',   'TestController@testjwt');
 });
 
 

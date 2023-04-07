@@ -296,6 +296,22 @@ return [
 
         'storage' => Tymon\JWTAuth\Providers\Storage\Illuminate::class,
 
+        'users' => [
+            'driver' => 'eloquent',
+            'model'  => \App\Models\User::class,
+        ],
+
     ],
+    'defaults' => [
+        'guard' => 'api',
+        'passwords' => 'users',
+    ],
+    'guards' => [
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+        ],
+    ],
+
 
 ];

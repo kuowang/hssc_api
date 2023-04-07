@@ -26,6 +26,7 @@ $router->group(['prefix' => 'v1', 'middleware' => [ 'jwtAuth','after']],function
 
     $router->get('testmysql',   'TestController@testMysql');
     $router->get('testredis',   'TestController@testRedis');
+    $router->get('testjwt',   'TestController@testjwt');
 
 });
 
